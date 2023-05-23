@@ -9,3 +9,8 @@ build:
   artifacts:
     - image: ghcr.io/carhartl/cluster-housekeeping
       context: .
+deploy:
+  kubectl:
+    flags:
+      apply: ["--namespace=housekeeping"]
+      delete: ["--namespace=housekeeping"]
