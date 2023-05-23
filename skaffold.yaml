@@ -1,0 +1,11 @@
+---
+apiVersion: skaffold/v4beta2
+kind: Config
+manifests:
+  kustomize:
+    paths:
+      - manifests/base
+build:
+  artifacts:
+    - image: ghcr.io/carhartl/cluster-housekeeping
+      context: .
