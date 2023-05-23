@@ -1,3 +1,13 @@
 package main
 
-func main() {}
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	for {
+		fmt.Println("Housekeeping...")
+		time.Sleep(1 * time.Second)
+	}
+}

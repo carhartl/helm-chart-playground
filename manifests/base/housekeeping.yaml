@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: housekeeping
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: housekeeping
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: housekeeping
+    spec:
+      containers:
+        - name: housekeeping
+          image: ghcr.io/carhartl/cluster-housekeeping
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 250m
+              memory: 250Mi
+              ephemeral-storage: 500Mi
+            requests:
+              cpu: 250m
+              memory: 250Mi
+              ephemeral-storage: 500Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+      securityContext:
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      restartPolicy: Always
