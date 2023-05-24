@@ -24,7 +24,7 @@ Then start [Skaffold](https://skaffold.dev/docs/) in continuous watch mode:
 skaffold dev
 ```
 
-## Observe results:
+## Observe results
 
 ```bash
 kubectl logs -l service=housekeeping -f
