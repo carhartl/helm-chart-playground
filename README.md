@@ -81,3 +81,57 @@ Assumptions:
 ### Distribution
 
 The implementation is supposed to be distributed as a Helm chart. The chart is available in the `charts` directory, but isn't released (releasable) to a repository yet.
+
+### Alternatives
+
+The [Kyverno](https://kyverno.io/) policy engine allows to write such rules in a declarative way, similar to other Kubernetes resources. Rules can either be executed in audit mode or be strictly enforced via admission controller, with results being available as custom resources (when in audit mode) in the cluster and as Prometheus metrics.
+
+To give an idea here are the image prefix and team label rules implemented as Kyverno policies (audit mode):
+
+```yaml
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-bitnami-image
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: validate-image
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      validate:
+        message: "Only Bitnami images are allowed."
+        pattern:
+          spec:
+            containers:
+              - image: "bitnami/* | docker.io/bitnami/*"
+```
+
+```yaml
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-team-label
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: check-for-label
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      validate:
+        message: "The label `team` is required."
+        pattern:
+          metadata:
+            labels:
+              team: "?*"
+```
+
+Not sure how to export the results as json log lines though :)
