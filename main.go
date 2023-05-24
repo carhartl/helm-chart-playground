@@ -13,44 +13,59 @@ import (
 	"k8s.io/client-go/rest"
 )
 
-type Rule struct {
+type PodEvaluationResult struct {
+	Pod            string           `json:"pod"`
+	RuleEvaluation []RuleEvaluation `json:"rule_evaluation"`
+}
+
+type RuleEvaluation struct {
 	Name  string `json:"name"`
 	Valid bool   `json:"valid"`
 }
 
-type PodEvaluationResult struct {
-	Pod            string `json:"pod"`
-	RuleEvaluation []Rule `json:"rule_evaluation"`
+type Validator func(pod corev1.Pod) bool
+
+type Rule struct {
+	Name      string
+	Validator Validator
 }
 
-func evaluateImagePrefix(pod corev1.Pod) Rule {
-	valid := true
-	// NOTE: for now ignoring init containers!
-	for _, container := range pod.Spec.Containers {
+func (r Rule) Evaluate(pod corev1.Pod) RuleEvaluation {
+	return RuleEvaluation{Name: r.Name, Valid: r.Validator(pod)}
+}
 
-		if !strings.HasPrefix(strings.Replace(container.Image, "docker.io/", "", 1), "bitnami/") {
-			valid = false
-			break
+func NewRule(name string, validator Validator) Rule {
+	return Rule{Name: name, Validator: validator}
+}
+
+var imagePrefixRule = NewRule("image_prefix",
+	func(pod corev1.Pod) bool {
+		valid := true
+		// NOTE: for now ignoring init containers!
+		for _, container := range pod.Spec.Containers {
+			if !strings.HasPrefix(strings.Replace(container.Image, "docker.io/", "", 1), "bitnami/") {
+				valid = false
+				break
+			}
 		}
-	}
-	return Rule{Name: "image_prefix", Valid: valid}
-}
+		return valid
+	})
 
-func evaluateTeamLabel(pod corev1.Pod) Rule {
-	valid := len(pod.Labels["team"]) > 0
-	return Rule{Name: "team_label_present", Valid: valid}
-}
+var teamLabelPresentRule = NewRule("team_label_present",
+	func(pod corev1.Pod) bool {
+		return len(pod.Labels["team"]) > 0
+	})
 
-func evaluateStartTime(pod corev1.Pod) Rule {
-	valid := pod.GetCreationTimestamp().Time.After(time.Now().Add(-7 * 24 * time.Hour))
-	return Rule{Name: "recent_start_time", Valid: valid}
-}
+var recentStartTimeRule = NewRule("recent_start_time",
+	func(pod corev1.Pod) bool {
+		return pod.GetCreationTimestamp().Time.After(time.Now().Add(-7 * 24 * time.Hour))
+	})
 
 func evaluatePodCompliance(pod corev1.Pod) PodEvaluationResult {
-	return PodEvaluationResult{Pod: pod.Name, RuleEvaluation: []Rule{
-		evaluateImagePrefix(pod),
-		evaluateTeamLabel(pod),
-		evaluateStartTime(pod),
+	return PodEvaluationResult{Pod: pod.Name, RuleEvaluation: []RuleEvaluation{
+		imagePrefixRule.Evaluate(pod),
+		teamLabelPresentRule.Evaluate(pod),
+		recentStartTimeRule.Evaluate(pod),
 	}}
 }
 
