@@ -84,9 +84,9 @@ The implementation is supposed to be distributed as a Helm chart. The chart is a
 
 ### Alternatives
 
-The [Kyverno](https://kyverno.io/) policy engine allows to write such rules in a declarative way, similar to other Kubernetes resources. Rules can either be executed in audit mode or be strictly enforced via admission controller, with results being available as custom resources (when in audit mode) in the cluster and as Prometheus metrics.
+The [Kyverno](https://kyverno.io/) policy engine allows to write such rules in a declarative way, similar to other Kubernetes resources. Rules can either be executed in audit mode or be strictly enforced via admission controller, with results being available as custom resources to inspect in the cluster (when in audit mode), as well as via Prometheus metrics.
 
-To give an idea here are the image prefix and team label rules implemented as Kyverno policies (audit mode):
+To give an idea, here are the image prefix and team label rules implemented as Kyverno policies (audit mode):
 
 ```yaml
 apiVersion: kyverno.io/v1
