@@ -27,7 +27,39 @@ skaffold dev
 ## Observe results
 
 ```bash
-kubectl logs -l service=housekeeping -f
+kubectl logs -l service=housekeeping -n housekeeping -f
+```
+
+Deploy a non-compliant workload:
+
+```bash
+kubectl apply -f - << EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wrong-nginx
+spec:
+  containers:
+    - image: nginx
+      name: nginx
+EOF
+```
+
+Deploy a compliant workload:
+
+```bash
+kubectl apply -f - << EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: good-nginx
+  labels:
+    team: test
+spec:
+  containers:
+    - image: bitnami/nginx
+      name: nginx
+EOF
 ```
 
 ## Notes
