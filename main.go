@@ -27,7 +27,8 @@ func evaluateImagePrefix(pod corev1.Pod) Rule {
 	valid := true
 	// NOTE: for now ignoring init containers!
 	for _, container := range pod.Spec.Containers {
-		if !strings.HasPrefix(container.Image, "bitnami/") {
+
+		if !strings.HasPrefix(strings.Replace(container.Image, "docker.io/", "", 1), "bitnami/") {
 			valid = false
 			break
 		}
