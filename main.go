@@ -64,7 +64,7 @@ func main() {
 	}
 
 	for {
-		time.Sleep(10 * time.Second)
+		time.Sleep(60 * time.Second)
 
 		pods, err := clientset.CoreV1().Pods("").List(context.TODO(), metav1.ListOptions{})
 		if err != nil {
