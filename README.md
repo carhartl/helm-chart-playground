@@ -37,7 +37,7 @@ kubectl apply -f - << EOF
 apiVersion: v1
 kind: Pod
 metadata:
-  name: wrong-nginx
+  name: bad-nginx
 spec:
   containers:
     - image: nginx
@@ -66,7 +66,7 @@ Output (evaluated once per minute):
 
 ```
 {"pod":"good-nginx","rule_evaluation":[{"name":"image_prefix","valid":true},{"name":"team_label_present","valid":true},{"name":"recent_start_time","valid":true}]}
-{"pod":"wrong-nginx","rule_evaluation":[{"name":"image_prefix","valid":false},{"name":"team_label_present","valid":false},{"name":"recent_start_time","valid":true}]}
+{"pod":"bad-nginx","rule_evaluation":[{"name":"image_prefix","valid":false},{"name":"team_label_present","valid":false},{"name":"recent_start_time","valid":true}]}
 ```
 
 ## Notes
