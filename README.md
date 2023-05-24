@@ -77,6 +77,7 @@ Assumptions:
 
 - We're not supposed to evaluate pods in the `kube-system` as well as the `housekeeping` namespace, where the service is deployed to.
 - We're not supposed to evaluate init containers.
+- Only running pods are evaluated.
 
 ### Distribution
 
