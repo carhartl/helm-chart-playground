@@ -1,0 +1,5 @@
+---
+image:
+  repository: ghcr.io/carhartl/cluster-housekeeping
+  tag: latest
+  pullPolicy: IfNotPresent

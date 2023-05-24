@@ -1,11 +1,19 @@
 ---
 apiVersion: skaffold/v4beta2
 kind: Config
-manifests:
-  kustomize:
-    paths:
-      - manifests/base
 build:
   artifacts:
-    - image: ghcr.io/carhartl/cluster-housekeeping
+    - image: housekeeping
       context: .
+deploy:
+  helm:
+    releases:
+      - name: housekeeping
+        namespace: housekeeping
+        createNamespace: true # Requires to use `deploy` for helm instead of `manifests`
+        chartPath: ./charts/housekeeping
+        setValueTemplates:
+          image.repository: "{{.IMAGE_REPO_housekeeping}}"
+          image.tag: "{{.IMAGE_TAG_housekeeping}}"
+        setValues:
+          image.pullPolicy: IfNotPresent

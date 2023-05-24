@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: housekeeping
-          image: ghcr.io/carhartl/cluster-housekeeping
-          imagePullPolicy: IfNotPresent
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           resources:
             limits:
               cpu: 250m
