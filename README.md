@@ -71,8 +71,8 @@ EOF
 Output (evaluated once per minute):
 
 ```
-{"pod":"good-nginx","rule_evaluation":[{"name":"image_prefix","valid":true},{"name":"team_label_present","valid":true},{"name":"recent_start_time","valid":true}]}
-{"pod":"bad-nginx","rule_evaluation":[{"name":"image_prefix","valid":false},{"name":"team_label_present","valid":false},{"name":"recent_start_time","valid":true}]}
+{"pod":"good-nginx","rule_evaluation":[{"name":"image_prefix","valid":true},{"name":"team_label_present","valid":true},{"name":"recent_start_time","valid":true}],"evaluated_at":"2023-05-25T15:09:45.398848381Z"}
+{"pod":"bad-nginx","rule_evaluation":[{"name":"image_prefix","valid":false},{"name":"team_label_present","valid":false},{"name":"recent_start_time","valid":true}],"evaluated_at":"2023-05-25T15:09:45.398228881Z"}
 ```
 
 ## Notes
