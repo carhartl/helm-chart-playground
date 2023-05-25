@@ -92,7 +92,7 @@ The implementation is supposed to be distributed as a Helm chart. The chart is a
 
 The [Kyverno](https://kyverno.io/) policy engine allows to write such rules in a declarative way, similar to other Kubernetes resources. Rules can either be executed in audit mode or be strictly enforced via admission controller, with results being available as custom resources to inspect in the cluster (when in audit mode), as well as via Prometheus metrics.
 
-To give an idea, here are the image prefix and team label rules implemented as Kyverno policies (audit mode):
+To give an idea, here are the image prefix, team label and recent start time rules implemented as Kyverno policies (audit mode):
 
 ```yaml
 apiVersion: kyverno.io/v1
@@ -138,6 +138,36 @@ spec:
           metadata:
             labels:
               team: "?*"
+```
+
+```yaml
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-recent-start-time
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: check-for-time-of-pod-creation
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      preconditions:
+        any:
+          - key: "{{ request.object.status.phase || '' }}"
+            operator: Equals
+            value: Running
+      validate:
+        message: "Pods running for more than a 1 week are prohibited."
+        deny:
+          conditions:
+            all:
+              - key: "{{ time_since('', '{{request.object.metadata.creationTimestamp}}', '') }}"
+                operator: GreaterThan
+                value: 168h
 ```
 
 Not sure how to export the results as json log lines though :)
