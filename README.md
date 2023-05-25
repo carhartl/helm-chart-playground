@@ -10,6 +10,12 @@
 brew install minikube skaffold helm
 ```
 
+Optional, for a [Lefthook](https://github.com/evilmartians/lefthook) based Git hooks setup:
+
+```bash
+brew install golangci-lint lefthook prettier yamllint && lefthook install
+```
+
 ## Development
 
 The implementation was build on Kubernetes 1.26.3. Start a [minikube](https://minikube.sigs.k8s.io/docs/) cluster:
