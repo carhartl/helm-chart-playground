@@ -1,12 +1,15 @@
 package rules
 
 import (
+	"time"
+
 	corev1 "k8s.io/api/core/v1"
 )
 
 type PodEvaluation struct {
 	Pod            string           `json:"pod"`
 	RuleEvaluation []RuleEvaluation `json:"rule_evaluation"`
+	EvaluatedAt    time.Time        `json:"evaluated_at"`
 }
 
 type RuleEvaluation struct {

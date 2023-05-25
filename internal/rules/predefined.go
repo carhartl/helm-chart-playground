@@ -35,5 +35,5 @@ func EvaluatePodCompliance(pod corev1.Pod) PodEvaluation {
 		imagePrefixRule.Evaluate(pod),
 		teamLabelPresentRule.Evaluate(pod),
 		recentStartTimeRule.Evaluate(pod),
-	}}
+	}, EvaluatedAt: time.Now()}
 }
