@@ -169,6 +169,6 @@ jobs:
       - name: Release chart
         # Third-party action, pin to commit SHA!
         # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
-        uses: helm/chart-releaser-action@ee26f50ce93ca23920dc1ce93e677665ce65a46e
+        uses: helm/chart-releaser-action@be16258da8010256c6e82849661221415f031968
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
