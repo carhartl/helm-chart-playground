@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
@@ -37,6 +39,8 @@ jobs:
       security-events: write
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
@@ -96,6 +100,8 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
