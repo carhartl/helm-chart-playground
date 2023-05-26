@@ -23,8 +23,7 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
-          check-latest: true
-          cache-dependency-path: go.sum
+          cache: false
       - name: golangci-lint
         # Third-party action, pin to commit SHA!
         # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
