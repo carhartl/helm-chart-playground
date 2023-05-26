@@ -75,6 +75,27 @@ Output (evaluated once per minute):
 {"pod":"good-nginx","rule_evaluation":[{"name":"image_prefix","valid":true},{"name":"team_label_present","valid":true},{"name":"recent_start_time","valid":true}],"evaluated_at":"2023-05-25T15:09:45.398848381Z"}
 ```
 
+## Installation
+
+Add Helm the repo as follows:
+
+```bash
+helm repo add housekeeping https://carhartl.github.io/cluster-housekeeping/
+helm repo update
+```
+
+To install the housekeeping chart:
+
+```bash
+helm install housekeeping housekeeping/housekeeping --namespace housekeeping --create-namespace
+```
+
+To uninstall the chart:
+
+```bash
+helm delete housekeeping
+```
+
 ## Notes
 
 ### Implementation
@@ -83,10 +104,6 @@ Assumptions:
 
 - We're not supposed to evaluate pods in the `kube-system` as well as the `housekeeping` namespace, where the service is deployed to.
 - We're not supposed to evaluate init containers.
-
-### Distribution
-
-The implementation is supposed to be distributed as a Helm chart. The chart is available in the `charts` directory, but isn't released (releasable) to a repository yet.
 
 ### Alternatives
 
