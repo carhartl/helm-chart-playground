@@ -77,20 +77,20 @@ Output (evaluated once per minute):
 
 ## Installation
 
-Add Helm the repo as follows:
+Add Helm repository:
 
 ```bash
 helm repo add housekeeping https://carhartl.github.io/cluster-housekeeping/
 helm repo update
 ```
 
-To install the housekeeping chart:
+To install chart:
 
 ```bash
 helm install housekeeping housekeeping/housekeeping --namespace housekeeping --create-namespace
 ```
 
-To uninstall the chart:
+To uninstall chart:
 
 ```bash
 helm delete housekeeping
