@@ -163,7 +163,6 @@ jobs:
       - build-and-push-image
     permissions:
       contents: write
-      pages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
