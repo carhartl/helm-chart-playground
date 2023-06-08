@@ -7,7 +7,7 @@
 [minikube](https://minikube.sigs.k8s.io/docs/), [Skaffold](https://skaffold.dev/docs/), [Helm](https://helm.sh/docs/):
 
 ```bash
-brew install minikube skaffold helm
+brew install minikube skaffold helm chart-testing
 ```
 
 Optional, for a [Lefthook](https://github.com/evilmartians/lefthook) based Git hooks setup:
@@ -28,6 +28,14 @@ Then start [Skaffold](https://skaffold.dev/docs/) in continuous watch mode:
 
 ```bash
 skaffold dev
+```
+
+## Testing
+
+Test helm chart:
+
+```bash
+ct install --chart-dirs . --charts charts/housekeeping
 ```
 
 ## Observe results
