@@ -1,6 +1,6 @@
 # Cluster Housekeeping
 
-[![Pipeline](https://github.com/carhartl/cluster-housekeeping/actions/workflows/pipeline.yml/badge.svg)](https://github.com/carhartl/cluster-housekeeping/actions/workflows/pipeline.yml)
+[![Pipeline](https://github.com/carhartl/cluster-housekeeping/actions/workflows/ci.yml/badge.svg)](https://github.com/carhartl/cluster-housekeeping/actions/workflows/ci.yml)
 
 ## Prerequisites
 
