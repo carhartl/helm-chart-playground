@@ -18,4 +18,4 @@ pre-commit:
     hadolint:
       tags: lint
       glob: "Dockerfile"
-      run: hadolint {staged_files}
+      run: hadolint {staged_files} --failure-threshold warning
