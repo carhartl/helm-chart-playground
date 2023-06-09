@@ -13,7 +13,7 @@ brew install minikube skaffold helm chart-testing
 Optional, for a [Lefthook](https://github.com/evilmartians/lefthook) based Git hooks setup:
 
 ```bash
-brew install golangci-lint lefthook prettier yamllint && lefthook install
+brew install golangci-lint hadolint lefthook prettier yamllint && lefthook install
 ```
 
 ## Development

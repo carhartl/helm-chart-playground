@@ -15,3 +15,7 @@ pre-commit:
       tags: lint
       glob: "*.go"
       run: golangci-lint run ./...
+    hadolint:
+      tags: lint
+      glob: "Dockerfile"
+      run: hadolint {staged_files}
