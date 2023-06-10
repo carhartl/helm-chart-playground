@@ -12,7 +12,28 @@ spec:
       args:
         - pod
         - -lservice=housekeeping
+      resources:
+        limits:
+          cpu: 250m
+          memory: 250Mi
+          ephemeral-storage: 500Mi
+        requests:
+          cpu: 250m
+          memory: 250Mi
+          ephemeral-storage: 500Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        readOnlyRootFilesystem: true
   restartPolicy: Never
+  securityContext:
+    runAsGroup: 1000
+    runAsNonRoot: true
+    runAsUser: 1000
+    seccompProfile:
+      type: RuntimeDefault
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
