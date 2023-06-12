@@ -62,11 +62,34 @@ jobs:
           path: "vuln.json"
           if-no-files-found: error
 
+  sbom-generation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Generate SBOM
+        # Third-party action, pin to commit SHA!
+        # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
+        uses: aquasecurity/trivy-action@b43daad0c3c96202fc5800b511dfae8e6ecce864
+        with:
+          image-ref: "."
+          scan-type: "fs"
+          format: "spdx-json"
+          output: "sbom.spdx.json"
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v3
+        with:
+          name: "sbom.spdx.json"
+          path: "sbom.spdx.json"
+          if-no-files-found: error
+
   build-and-push-image:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
     needs:
       - vulnerability-scan
+      - sbom-generation
     permissions:
       contents: read
       id-token: write
@@ -131,6 +154,12 @@ jobs:
           name: "vuln.json"
       - name: Attest vulnerability scan
         run: cosign attest --yes --replace --predicate vuln.json --type vuln ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}@${{ steps.docker-build.outputs.digest }}
+      - name: Download SBOM
+        uses: actions/download-artifact@v3
+        with:
+          name: "sbom.spdx.json"
+      - name: Attest SBOM
+        run: cosign attest --yes --replace --predicate sbom.spdx.json --type spdxjson ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}@${{ steps.docker-build.outputs.digest }}
 
   validate-chart:
     runs-on: ubuntu-latest
