@@ -104,6 +104,22 @@ To uninstall chart:
 helm delete housekeeping
 ```
 
+## Releases
+
+Releases are published with a signed container image along with [in-toto](https://in-toto.io) attestations for a succesful vulnerability scan and an SBOM (all of it using [cosign keyless signing](https://docs.sigstore.dev/cosign/overview/#keyless-signing-of-a-container)).
+
+Verify vulnerability scan attestion:
+
+```bash
+cosign verify-attestation ghcr.io/carhartl/cluster-housekeeping/housekeeping:af82115d5e3d54039de0d1d086aaec0e452e7969 --certificate-oidc-issuer=https://token.actions.githubusercontent.com --certificate-identity-regexp=carhartl --type vuln
+```
+
+Verify SBOM attestion:
+
+```bash
+cosign verify-attestation ghcr.io/carhartl/cluster-housekeeping/housekeeping:af82115d5e3d54039de0d1d086aaec0e452e7969 --certificate-oidc-issuer=https://token.actions.githubusercontent.com --certificate-identity-regexp=carhartl --type spdxjson
+```
+
 ## Notes
 
 ### Implementation
