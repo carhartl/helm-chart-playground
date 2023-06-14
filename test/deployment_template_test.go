@@ -12,12 +12,9 @@ import (
 func TestDeploymentTemplateRendersContainerImage(t *testing.T) {
 	helmChartPath := "../charts/housekeeping"
 
-	// Setup the args. For this test, we will set the following input values:
-	// - image=nginx:1.15.8
 	options := &helm.Options{
 		SetValues: map[string]string{"image.repository": "foo", "image.tag": "latest", "image.pullPolicy": "Never"},
 	}
-
 	output := helm.RenderTemplate(t, options, helmChartPath, "deployment", []string{"templates/deployment.yaml"})
 
 	var deployment appsv1.Deployment
