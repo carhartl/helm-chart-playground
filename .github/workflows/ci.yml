@@ -43,6 +43,8 @@ jobs:
         with:
           dockerfile: Dockerfile
           failure-threshold: error
+      - name: Run tests
+        run: go test -v ./...
 
   vulnerability-scan:
     runs-on: ubuntu-latest
