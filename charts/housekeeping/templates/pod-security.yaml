@@ -33,7 +33,7 @@ spec:
             - "pod-security.kubernetes.io/enforce-version=latest"
             - "pod-security.kubernetes.io/warn=restricted"
             - "pod-security.kubernetes.io/warn-version=latest"
-    ttlSecondsAfterFinished: 300
+  ttlSecondsAfterFinished: 300
 ---
 apiVersion: v1
 kind: ServiceAccount
