@@ -13,24 +13,27 @@ import (
 
 func TestDeployment(t *testing.T) {
 	helmChartPath := "../charts/housekeeping"
+	testNamespace := fmt.Sprintf("housekeeping-test-%s", strings.ToLower(random.UniqueId()))
+	releaseName := fmt.Sprintf("test-%s", strings.ToLower(random.UniqueId()))
 
-	options := &helm.Options{
+	helmOptions := &helm.Options{
 		SetValues: map[string]string{
 			"image.repository": "ghcr.io/carhartl/cluster-housekeeping/housekeeping",
 			"image.tag":        "latest",
 			"image.pullPolicy": "IfNotPresent"},
+		ExtraArgs: map[string][]string{
+			"install":   []string{"--namespace", testNamespace, "--create-namespace"},
+			"uninstall": []string{"--namespace", testNamespace},
+		},
 	}
-
-	releaseName := fmt.Sprintf("test-%s", strings.ToLower(random.UniqueId()))
-	helm.Install(t, options, helmChartPath, releaseName)
-	defer helm.Delete(t, options, releaseName, true)
+	helm.Install(t, helmOptions, helmChartPath, releaseName)
+	defer helm.Delete(t, helmOptions, releaseName, true)
 
 	// Now that the chart is deployed, verify the deployment.
 	// Setup the kubectl config and context. Here we choose to use the defaults, which is:
 	// - HOME/.kube/config for the kubectl config file
 	// - Current context of the kubectl config file
-	// We also specify that we are working in the default namespace (required to get the Pod)
-	kubectlOptions := k8s.NewKubectlOptions("", "", "default")
+	kubectlOptions := k8s.NewKubectlOptions("", "", testNamespace)
 	retries := 5
 	sleep := 2 * time.Second
 	k8s.WaitUntilDeploymentAvailable(t, kubectlOptions, "housekeeping", retries, sleep)
