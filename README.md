@@ -32,11 +32,20 @@ skaffold dev
 
 ## Testing
 
-Test helm chart:
+[Terratest](https://terratest.gruntwork.io/docs/) based tests (unit + integration):
+
+```bash
+cd test
+go test "./..."
+```
+
+Smoke test Helm chart:
 
 ```bash
 ct install --chart-dirs . --charts charts/housekeeping
 ```
+
+Note: integration and smoke tests at the moment assume an up and running Kubernetes cluster.
 
 ## Observe results
 
