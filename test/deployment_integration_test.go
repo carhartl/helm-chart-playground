@@ -22,8 +22,8 @@ func TestDeployment(t *testing.T) {
 			"image.tag":        "latest",
 			"image.pullPolicy": "IfNotPresent"},
 		ExtraArgs: map[string][]string{
-			"install":   []string{"--namespace", testNamespace, "--create-namespace"},
-			"uninstall": []string{"--namespace", testNamespace},
+			"install": []string{"--namespace", testNamespace, "--create-namespace"},
+			"delete":  []string{"--namespace", testNamespace},
 		},
 	}
 	helm.Install(t, helmOptions, helmChartPath, releaseName)
