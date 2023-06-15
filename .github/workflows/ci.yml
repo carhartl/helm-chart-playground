@@ -43,6 +43,12 @@ jobs:
         with:
           dockerfile: Dockerfile
           failure-threshold: error
+      - name: Start minikube
+        # Third-party action, pin to commit SHA!
+        # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
+        uses: medyagh/setup-minikube@3213bac7294895b1d92c1f4db1f99c91a308efaf
+        with:
+          kubernetes-version: v1.26.3
       - name: Run tests
         working-directory: ./test
         run: go test -v ./...
