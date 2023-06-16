@@ -4,10 +4,7 @@ kind: Job
 metadata:
   name: label-ns
   labels:
-    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
-    app.kubernetes.io/instance: "{{ .Release.Name }}"
-    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
-    helm.sh/chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
+{{- include "housekeeping.labels" . | indent 4 }}
   annotations:
     helm.sh/hook: pre-install
     helm.sh/hook-delete-policy: hook-succeeded
@@ -15,9 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/managed-by: "{{ .Release.Service }}"
-        app.kubernetes.io/instance: "{{ .Release.Name }}"
-        helm.sh/chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
+{{- include "housekeeping.labels" . | indent 8 }}
     spec:
       restartPolicy: Never
       serviceAccountName: label-ns
@@ -40,10 +35,7 @@ kind: ServiceAccount
 metadata:
   name: label-ns
   labels:
-    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
-    app.kubernetes.io/instance: "{{ .Release.Name }}"
-    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
-    helm.sh/chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
+{{- include "housekeeping.labels" . | indent 4 }}
   annotations:
     helm.sh/hook: pre-install
     helm.sh/hook-delete-policy: hook-succeeded
@@ -53,10 +45,7 @@ kind: Role
 metadata:
   name: label-ns
   labels:
-    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
-    app.kubernetes.io/instance: "{{ .Release.Name }}"
-    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
-    helm.sh/chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
+{{- include "housekeeping.labels" . | indent 4 }}
   annotations:
     helm.sh/hook: pre-install
     helm.sh/hook-delete-policy: hook-succeeded
@@ -71,10 +60,7 @@ kind: RoleBinding
 metadata:
   name: "{{ .Release.Namespace }}:label-ns"
   labels:
-    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
-    app.kubernetes.io/instance: "{{ .Release.Name }}"
-    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
-    helm.sh/chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
+{{- include "housekeeping.labels" . | indent 4 }}
   annotations:
     helm.sh/hook: pre-install
     helm.sh/hook-delete-policy: hook-succeeded
