@@ -10,7 +10,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 
-	"github.com/carhartl/cluster-housekeeping/internal/rules"
+	"github.com/carhartl/helm-chart-playground/internal/rules"
 )
 
 func main() {

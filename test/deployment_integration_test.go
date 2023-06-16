@@ -18,7 +18,7 @@ func TestDeployment(t *testing.T) {
 
 	helmOptions := &helm.Options{
 		SetValues: map[string]string{
-			"image.repository": "ghcr.io/carhartl/cluster-housekeeping/housekeeping",
+			"image.repository": "ghcr.io/carhartl/helm-chart-playground/housekeeping",
 			"image.tag":        "latest",
 			"image.pullPolicy": "IfNotPresent"},
 		ExtraArgs: map[string][]string{
@@ -46,7 +46,7 @@ func TestNamespaceLabels(t *testing.T) {
 
 	helmOptions := &helm.Options{
 		SetValues: map[string]string{
-			"image.repository": "ghcr.io/carhartl/cluster-housekeeping/housekeeping",
+			"image.repository": "ghcr.io/carhartl/helm-chart-playground/housekeeping",
 			"image.tag":        "latest",
 			"image.pullPolicy": "IfNotPresent"},
 		ExtraArgs: map[string][]string{

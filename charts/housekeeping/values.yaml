@@ -1,5 +1,5 @@
 ---
 image:
-  repository: ghcr.io/carhartl/cluster-housekeeping/housekeeping
+  repository: ghcr.io/carhartl/helm-chart-playground/housekeeping
   tag: latest
   pullPolicy: IfNotPresent

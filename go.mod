@@ -1,4 +1,4 @@
-module github.com/carhartl/cluster-housekeeping
+module github.com/carhartl/helm-chart-playground
 
 go 1.20
 

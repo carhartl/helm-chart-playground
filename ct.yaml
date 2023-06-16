@@ -4,4 +4,4 @@ target-branch: main
 chart-dirs:
   - charts
 chart-repos:
-  - housekeeping=https://carhartl.github.io/cluster-housekeeping/
+  - playground=https://carhartl.github.io/helm-chart-playground/
