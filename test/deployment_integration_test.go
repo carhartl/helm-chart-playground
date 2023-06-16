@@ -34,9 +34,7 @@ func TestDeployment(t *testing.T) {
 
 	helm.Install(t, helmOptions, helmChartPath, releaseName)
 	defer helm.Delete(t, helmOptions, releaseName, true)
-	defer func() {
-		k8s.DeleteNamespace(t, kubectlOptions, testNamespace)
-	}()
+	defer k8s.DeleteNamespace(t, kubectlOptions, testNamespace)
 
 	retries := 5
 	sleep := 2 * time.Second
@@ -66,9 +64,7 @@ func TestNamespaceLabels(t *testing.T) {
 
 	helm.Install(t, helmOptions, helmChartPath, releaseName)
 	defer helm.Delete(t, helmOptions, releaseName, true)
-	defer func() {
-		k8s.DeleteNamespace(t, kubectlOptions, testNamespace)
-	}()
+	defer k8s.DeleteNamespace(t, kubectlOptions, testNamespace)
 
 	ns := k8s.GetNamespace(t, kubectlOptions, testNamespace)
 	labels := ns.Labels
