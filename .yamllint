@@ -1,0 +1,11 @@
+---
+extends: default
+
+rules:
+  line-length: disable
+  comments: disable
+
+ignore: |
+  charts/housekeeping/templates/deployment.yaml
+  charts/housekeeping/templates/pod-security.yaml
+  charts/housekeeping/templates/rbac-service-account.yaml

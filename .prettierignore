@@ -1,1 +1,3 @@
+charts/housekeeping/templates/deployment.yaml
+charts/housekeeping/templates/pod-security.yaml
 charts/housekeeping/templates/rbac-service-account.yaml
