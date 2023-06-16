@@ -26,14 +26,18 @@ func TestDeployment(t *testing.T) {
 			"delete":  []string{"--namespace", testNamespace},
 		},
 	}
-	helm.Install(t, helmOptions, helmChartPath, releaseName)
-	defer helm.Delete(t, helmOptions, releaseName, true)
-
 	// Now that the chart is deployed, verify the deployment.
 	// Setup the kubectl config and context. Here we choose to use the defaults, which is:
 	// - HOME/.kube/config for the kubectl config file
 	// - Current context of the kubectl config file
 	kubectlOptions := k8s.NewKubectlOptions("", "", testNamespace)
+
+	helm.Install(t, helmOptions, helmChartPath, releaseName)
+	defer helm.Delete(t, helmOptions, releaseName, true)
+	defer func() {
+		k8s.DeleteNamespace(t, kubectlOptions, testNamespace)
+	}()
+
 	retries := 5
 	sleep := 2 * time.Second
 	k8s.WaitUntilDeploymentAvailable(t, kubectlOptions, "housekeeping", retries, sleep)
@@ -54,18 +58,20 @@ func TestNamespaceLabels(t *testing.T) {
 			"delete":  []string{"--namespace", testNamespace},
 		},
 	}
-	helm.Install(t, helmOptions, helmChartPath, releaseName)
-	defer helm.Delete(t, helmOptions, releaseName, true)
-
 	// Now that the chart is deployed, verify the deployment.
 	// Setup the kubectl config and context. Here we choose to use the defaults, which is:
 	// - HOME/.kube/config for the kubectl config file
 	// - Current context of the kubectl config file
 	kubectlOptions := k8s.NewKubectlOptions("", "", testNamespace)
 
+	helm.Install(t, helmOptions, helmChartPath, releaseName)
+	defer helm.Delete(t, helmOptions, releaseName, true)
+	defer func() {
+		k8s.DeleteNamespace(t, kubectlOptions, testNamespace)
+	}()
+
 	ns := k8s.GetNamespace(t, kubectlOptions, testNamespace)
 	labels := ns.Labels
-
 	var label string
 	var ok bool
 	if label, ok = labels["pod-security.kubernetes.io/enforce"]; ok {
