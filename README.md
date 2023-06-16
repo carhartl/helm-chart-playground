@@ -1,6 +1,6 @@
-# Cluster Housekeeping
+# Helm Chart Playground
 
-[![Pipeline](https://github.com/carhartl/cluster-housekeeping/actions/workflows/ci.yml/badge.svg)](https://github.com/carhartl/cluster-housekeeping/actions/workflows/ci.yml)
+[![Pipeline](https://github.com/carhartl/helm-chart-playground/actions/workflows/ci.yml/badge.svg)](https://github.com/carhartl/helm-chart-playground/actions/workflows/ci.yml)
 
 ## Prerequisites
 
@@ -97,14 +97,14 @@ Output (evaluated once per minute):
 Add Helm repository:
 
 ```bash
-helm repo add housekeeping https://carhartl.github.io/cluster-housekeeping/
+helm repo add playground https://carhartl.github.io/helm-chart-playground/
 helm repo update
 ```
 
 To install chart:
 
 ```bash
-helm install housekeeping housekeeping/housekeeping --namespace housekeeping --create-namespace
+helm install housekeeping playground/housekeeping --namespace housekeeping --create-namespace
 ```
 
 To uninstall chart:
@@ -120,13 +120,13 @@ Releases are published with a signed container image along with [in-toto](https:
 Verify vulnerability scan attestion:
 
 ```bash
-cosign verify-attestation ghcr.io/carhartl/cluster-housekeeping/housekeeping:af82115d5e3d54039de0d1d086aaec0e452e7969 --certificate-oidc-issuer=https://token.actions.githubusercontent.com --certificate-identity-regexp=carhartl --type vuln
+cosign verify-attestation ghcr.io/carhartl/helm-chart-playground/housekeeping:af82115d5e3d54039de0d1d086aaec0e452e7969 --certificate-oidc-issuer=https://token.actions.githubusercontent.com --certificate-identity-regexp=carhartl --type vuln
 ```
 
 Verify SBOM attestion:
 
 ```bash
-cosign verify-attestation ghcr.io/carhartl/cluster-housekeeping/housekeeping:af82115d5e3d54039de0d1d086aaec0e452e7969 --certificate-oidc-issuer=https://token.actions.githubusercontent.com --certificate-identity-regexp=carhartl --type spdxjson
+cosign verify-attestation ghcr.io/carhartl/helm-chart-playground/housekeeping:af82115d5e3d54039de0d1d086aaec0e452e7969 --certificate-oidc-issuer=https://token.actions.githubusercontent.com --certificate-identity-regexp=carhartl --type spdxjson
 ```
 
 ## Notes
