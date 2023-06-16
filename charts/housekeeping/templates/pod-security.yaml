@@ -14,8 +14,6 @@ spec:
       labels:
 {{- include "housekeeping.labels" . | indent 8 }}
     spec:
-      restartPolicy: Never
-      serviceAccountName: label-ns
       containers:
         - name: labeler
           image: bitnami/kubectl:latest
@@ -28,6 +26,29 @@ spec:
             - "pod-security.kubernetes.io/enforce-version=latest"
             - "pod-security.kubernetes.io/warn=restricted"
             - "pod-security.kubernetes.io/warn-version=latest"
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+              ephemeral-storage: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+              ephemeral-storage: 100Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+      restartPolicy: Never
+      securityContext:
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: label-ns
   ttlSecondsAfterFinished: 300
 ---
 apiVersion: v1
