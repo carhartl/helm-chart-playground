@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-[minikube](https://minikube.sigs.k8s.io/docs/), [Skaffold](https://skaffold.dev/docs/), [Helm](https://helm.sh/docs/):
+[minikube](https://minikube.sigs.k8s.io/docs/), [Skaffold](https://skaffold.dev/docs/), [Helm](https://helm.sh/docs/), [ct](https://github.com/helm/chart-testing):
 
 ```bash
 brew install minikube skaffold helm chart-testing
