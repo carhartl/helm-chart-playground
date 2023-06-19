@@ -2,25 +2,37 @@ package test
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"testing"
 	"time"
 
+	"github.com/gruntwork-io/terratest/modules/docker"
 	"github.com/gruntwork-io/terratest/modules/helm"
 	"github.com/gruntwork-io/terratest/modules/k8s"
 	"github.com/gruntwork-io/terratest/modules/random"
 )
 
 func TestDeployment(t *testing.T) {
+	docker.Build(t, "../.", &docker.BuildOptions{
+		Tags: []string{"housekeeping:test"},
+		Env: map[string]string{
+			"DOCKER_TLS_VERIFY":       os.Getenv("DOCKER_TLS_VERIFY"),
+			"DOCKER_HOST":             os.Getenv("DOCKER_HOST"),
+			"DOCKER_CERT_PATH":        os.Getenv("DOCKER_CERT_PATH"),
+			"MINIKUBE_ACTIVE_DOCKERD": os.Getenv("MINIKUBE_ACTIVE_DOCKERD"),
+		},
+	})
+
 	helmChartPath := "../charts/housekeeping"
 	testNamespace := fmt.Sprintf("housekeeping-test-%s", strings.ToLower(random.UniqueId()))
 	releaseName := fmt.Sprintf("test-%s", strings.ToLower(random.UniqueId()))
 
 	helmOptions := &helm.Options{
 		SetValues: map[string]string{
-			"image.repository": "ghcr.io/carhartl/helm-chart-playground/housekeeping",
-			"image.tag":        "latest",
-			"image.pullPolicy": "IfNotPresent",
+			"image.repository": "housekeeping",
+			"image.tag":        "test",
+			"image.pullPolicy": "Never",
 		},
 		ExtraArgs: map[string][]string{
 			"install": []string{"--namespace", testNamespace, "--create-namespace"},
@@ -43,15 +55,25 @@ func TestDeployment(t *testing.T) {
 }
 
 func TestNamespaceLabels(t *testing.T) {
+	docker.Build(t, "../.", &docker.BuildOptions{
+		Tags: []string{"housekeeping:test"},
+		Env: map[string]string{
+			"DOCKER_TLS_VERIFY":       os.Getenv("DOCKER_TLS_VERIFY"),
+			"DOCKER_HOST":             os.Getenv("DOCKER_HOST"),
+			"DOCKER_CERT_PATH":        os.Getenv("DOCKER_CERT_PATH"),
+			"MINIKUBE_ACTIVE_DOCKERD": os.Getenv("MINIKUBE_ACTIVE_DOCKERD"),
+		},
+	})
+
 	helmChartPath := "../charts/housekeeping"
 	testNamespace := fmt.Sprintf("housekeeping-test-%s", strings.ToLower(random.UniqueId()))
 	releaseName := fmt.Sprintf("test-%s", strings.ToLower(random.UniqueId()))
 
 	helmOptions := &helm.Options{
 		SetValues: map[string]string{
-			"image.repository": "ghcr.io/carhartl/helm-chart-playground/housekeeping",
-			"image.tag":        "latest",
-			"image.pullPolicy": "IfNotPresent",
+			"image.repository": "housekeeping",
+			"image.tag":        "test",
+			"image.pullPolicy": "Never",
 		},
 		ExtraArgs: map[string][]string{
 			"install": []string{"--namespace", testNamespace, "--create-namespace"},

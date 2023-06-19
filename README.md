@@ -35,6 +35,7 @@ skaffold dev
 [Terratest](https://terratest.gruntwork.io/docs/) based tests (unit + integration):
 
 ```bash
+eval $(minikube docker-env)
 cd test
 go test "./..."
 ```
