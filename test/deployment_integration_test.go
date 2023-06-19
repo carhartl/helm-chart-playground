@@ -20,7 +20,8 @@ func TestDeployment(t *testing.T) {
 		SetValues: map[string]string{
 			"image.repository": "ghcr.io/carhartl/helm-chart-playground/housekeeping",
 			"image.tag":        "latest",
-			"image.pullPolicy": "IfNotPresent"},
+			"image.pullPolicy": "IfNotPresent",
+		},
 		ExtraArgs: map[string][]string{
 			"install": []string{"--namespace", testNamespace, "--create-namespace"},
 			"delete":  []string{"--namespace", testNamespace},
@@ -50,7 +51,8 @@ func TestNamespaceLabels(t *testing.T) {
 		SetValues: map[string]string{
 			"image.repository": "ghcr.io/carhartl/helm-chart-playground/housekeeping",
 			"image.tag":        "latest",
-			"image.pullPolicy": "IfNotPresent"},
+			"image.pullPolicy": "IfNotPresent",
+		},
 		ExtraArgs: map[string][]string{
 			"install": []string{"--namespace", testNamespace, "--create-namespace"},
 			"delete":  []string{"--namespace", testNamespace},
