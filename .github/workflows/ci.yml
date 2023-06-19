@@ -55,7 +55,7 @@ jobs:
         with:
           kubernetes-version: v1.26.3
       - run: |
-          while read line; do echo ${line#"export "} >> "$GITHUB_ENV"; done < <(minikube docker-env | head -n4)
+          while read line; do echo ${line#"export "} | sed -e 's/"//g' >> "$GITHUB_ENV"; done < <(minikube docker-env | head -n4)
       - name: Run tests
         working-directory: ./test
         run: go test -v ./...
