@@ -7,6 +7,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 
 	"github.com/gruntwork-io/terratest/modules/helm"
+	"github.com/stretchr/testify/require"
 )
 
 func TestDeploymentTemplateRendersContainerImage(t *testing.T) {
@@ -24,13 +25,11 @@ func TestDeploymentTemplateRendersContainerImage(t *testing.T) {
 
 	expectedContainerImage := "foo:latest"
 	actualContainerImage := podContainers[0].Image
-	if actualContainerImage != expectedContainerImage {
-		t.Fatalf("Rendered container image (%s) is not expected (%s)", podContainers[0].Image, expectedContainerImage)
-	}
+	require.Equal(t, expectedContainerImage, actualContainerImage,
+		"Rendered container image (%s) is not expected (%s)", podContainers[0].Image, expectedContainerImage)
 
 	expectedPullPolicy := corev1.PullPolicy("Never")
 	actualPullPolicy := podContainers[0].ImagePullPolicy
-	if actualPullPolicy != expectedPullPolicy {
-		t.Fatalf("Rendered container image pull policy (%s) is not expected (%s)", actualPullPolicy, expectedPullPolicy)
-	}
+	require.Equal(t, expectedPullPolicy, actualPullPolicy,
+		"Rendered container image pull policy (%s) is not expected (%s)", actualPullPolicy, expectedPullPolicy)
 }

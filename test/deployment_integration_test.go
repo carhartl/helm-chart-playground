@@ -11,6 +11,7 @@ import (
 	"github.com/gruntwork-io/terratest/modules/helm"
 	"github.com/gruntwork-io/terratest/modules/k8s"
 	"github.com/gruntwork-io/terratest/modules/random"
+	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -71,19 +72,19 @@ func (s *Suite) TestNamespaceLabels() {
 	ns := k8s.GetNamespace(s.T(), kubectlOptions, testNamespace)
 	labels := ns.Labels
 	var (
-		label string
-		ok    bool
+		expectedLabel string
+		actualLabel   string
 	)
-	if label, ok = labels["pod-security.kubernetes.io/enforce"]; ok {
-		if label != "restricted" {
-			s.T().Fatalf("Expected label \"pod-security.kubernetes.io/enforce\" to have value \"restricted\", got %s", label)
-		}
-	}
-	if label, ok = labels["pod-security.kubernetes.io/enforce-version"]; ok {
-		if label != "latest" {
-			s.T().Fatalf("Expected label \"pod-security.kubernetes.io/enforce-version\" to have value \"latest\", got %s", label)
-		}
-	}
+	require.Contains(s.T(), labels, "pod-security.kubernetes.io/enforce")
+	expectedLabel = "restricted"
+	actualLabel = labels["pod-security.kubernetes.io/enforce"]
+	require.Equal(s.T(), expectedLabel, actualLabel,
+		"Expected label \"pod-security.kubernetes.io/enforce\" to have value \"%s\", got %s", expectedLabel, actualLabel)
+	require.Contains(s.T(), labels, "pod-security.kubernetes.io/enforce-version")
+	expectedLabel = "latest"
+	actualLabel = labels["pod-security.kubernetes.io/enforce-version"]
+	require.Equal(s.T(), "latest", actualLabel,
+		"Expected label \"pod-security.kubernetes.io/enforce-version\" to have value \"%s\", got %s", expectedLabel, actualLabel)
 }
 
 func TestSuite(t *testing.T) {
