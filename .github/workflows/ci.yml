@@ -11,6 +11,7 @@ on:
       - ".vscode/**"
       - "**.md"
       - .gitignore
+      - .prettierignore
       - "lefthook.yml"
       - "skaffold.yaml"
   pull_request:
