@@ -52,7 +52,9 @@ jobs:
           kubernetes-version: v1.26.3
       - name: Run tests
         working-directory: ./test
-        run: go test -v ./...
+        run: |
+          eval $(minikube docker-env)
+          go test -v ./...
 
   vulnerability-scan:
     runs-on: ubuntu-latest
