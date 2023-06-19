@@ -50,11 +50,12 @@ jobs:
         uses: medyagh/setup-minikube@3213bac7294895b1d92c1f4db1f99c91a308efaf
         with:
           kubernetes-version: v1.26.3
+      - run: |
+          minikube docker-env | head -n4 > minikube-docker-env
+          while read line; do echo $line >> "$GITHUB_ENV"; done < minikube-docker-env
       - name: Run tests
         working-directory: ./test
-        run: |
-          eval $(minikube docker-env)
-          go test -v ./...
+        run: go test -v ./...
 
   vulnerability-scan:
     runs-on: ubuntu-latest
