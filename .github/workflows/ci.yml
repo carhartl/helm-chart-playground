@@ -12,8 +12,8 @@ on:
       - "**.md"
       - .gitignore
       - .prettierignore
-      - "lefthook.yml"
-      - "skaffold.yaml"
+      - lefthook.yml
+      - skaffold.yaml
   pull_request:
     branches: [main]
   workflow_dispatch:
