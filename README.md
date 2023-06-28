@@ -95,23 +95,10 @@ Output (evaluated once per minute):
 
 ## Installation
 
-Add Helm repository:
+Install chart from ghcr repository:
 
 ```bash
-helm repo add playground https://carhartl.github.io/helm-chart-playground/
-helm repo update
-```
-
-To install chart:
-
-```bash
-helm install housekeeping playground/housekeeping --namespace housekeeping --create-namespace
-```
-
-To uninstall chart:
-
-```bash
-helm delete housekeeping
+helm upgrade --install --wait housekeeping oci://ghcr.io/carhartl/charts/housekeeping
 ```
 
 ## Releases

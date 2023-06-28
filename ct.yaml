@@ -4,4 +4,4 @@ target-branch: main
 chart-dirs:
   - charts
 chart-repos:
-  - playground=https://carhartl.github.io/helm-chart-playground/
+  - playground=oci://ghcr.io/carhartl/charts/
