@@ -59,7 +59,7 @@ func (s *Suite) SetupSuite() {
 func (s *Suite) TearDownSuite() {
 	helm.Delete(s.T(), helmOptions, releaseName, true)
 	k8s.DeleteNamespace(s.T(), kubectlOptions, testNamespace)
-	docker.DeleteImageE(s.T(), "housekeeping:test", nil)
+	_ = docker.DeleteImageE(s.T(), "housekeeping:test", nil)
 }
 
 func (s *Suite) TestDeployment() {
