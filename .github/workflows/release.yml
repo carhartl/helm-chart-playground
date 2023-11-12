@@ -188,7 +188,7 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
         # Third-party action, pin to commit SHA!
         # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
-        uses: helm/kind-action@fa81e57adff234b2908110485695db0f181f3c67
+        uses: helm/kind-action@dda0770415bac9fc20092cacbc54aa298604d140
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'
         run: ct install --config ct.yaml
