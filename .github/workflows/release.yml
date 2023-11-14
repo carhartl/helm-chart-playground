@@ -172,7 +172,7 @@ jobs:
       - name: Set up chart-testing
         # Third-party action, pin to commit SHA!
         # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
-        uses: helm/chart-testing-action@e8788873172cb653a90ca2e819d79d65a66d4e76
+        uses: helm/chart-testing-action@e6669bcd63d7cb57cb4380c33043eebe5d111992
         with:
           version: v3.8.0
       - name: Run chart-testing (list-changed)
