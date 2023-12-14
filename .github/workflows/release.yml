@@ -150,13 +150,13 @@ jobs:
       - name: Sign the published container image
         run: cosign sign --yes ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}@${{ steps.docker-build.outputs.digest }}
       - name: Download cosign vulnerability scan record
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: "vuln.json"
       - name: Attest vulnerability scan
         run: cosign attest --yes --replace --predicate vuln.json --type vuln ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}@${{ steps.docker-build.outputs.digest }}
       - name: Download SBOM
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: "sbom.spdx.json"
       - name: Attest SBOM
